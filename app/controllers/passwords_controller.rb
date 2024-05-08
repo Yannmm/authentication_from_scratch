@@ -8,7 +8,8 @@ class PasswordsController < ApplicationController
         if current_user.update(password_params)
             redirect_to edit_password_path, notice: "Your password has been updated successfully."
         else
-            # FIXME: what is 422 unprocessable_entity
+            # DONE: what is 422 unprocessable_entity
+            # It means server cannot execute the instructions
             render :edit, status: :unprocessable_entity
         end
     end
@@ -20,6 +21,8 @@ class PasswordsController < ApplicationController
             :password,
             :password_confirmation,
             :password_challenge
-        ).with_defaults(password_challenge: "") # Force to validate old password
+        ).with_defaults(password_challenge: "") 
+        # DONE: Force to validate old password
+        # For ActionController::Parameters, merge two hashes.
     end
 end
