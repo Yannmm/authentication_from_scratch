@@ -6,11 +6,15 @@ class PasswordResetsController < ApplicationController
 
     def create 
         if (user = User.find_by(email: params[:email]))
-            # FIXME: how mailer is used to send email in dev?
-            PasswordMailer.with(user: user, token: user.generate_token_for(:password_reset)).password_reset.deliver_later
+            # DONE: how mailer is used to send email in dev?
+            PasswordMailer.with(
+                user: user, 
+                token: user.generate_token_for(:password_reset))
+                .password_reset.deliver_later
         end        
 
-        # FIXME: not matter user found or not, always redirect to home page, so it's impossible to test whether a user exists.
+        # DONE: not matter user found or not, always redirect to home page, so it's impossible to test whether a user exists.
+        # A very good catch
         redirect_to root_path, notice: 'Check your email to reset your password.'
     end
 
